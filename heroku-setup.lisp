@@ -2,9 +2,9 @@
 
 (print ">>> Building system....")
 
-(load (make-pathname :directory *build-dir* :defaults "example.asd"))
+(load (make-pathname :directory *build-dir* :defaults "linkback.asd"))
 
-(ql:quickload :example)
+(ql:quickload :linkback)
 
 ;;; Copy wuwei public files to build
 (wu:heroku-install-wupub-files)
