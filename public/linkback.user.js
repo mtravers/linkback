@@ -257,9 +257,9 @@ function getElementText(node) {
     
 
     var homeUrl = "http://hyperphor.com/webhack/greasemonkey/blurb.html";
-    var homeSiteUrl = "http://hyperphor.com/";
+      var homeSiteUrl = "http://linkback.herokuapp.com";
     var seomozUrl = "http://seomoz.org";
-    var seomozIconUrl = "http://linkback.herokuapp.com/linkscape.png";
+    var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
     var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
     insertEndMatter = function(pageUrl, container) {
