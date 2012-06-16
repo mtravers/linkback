@@ -259,15 +259,16 @@ function getElementText(node) {
     var homeUrl = "http://hyperphor.com/webhack/greasemonkey/blurb.html";
     var homeSiteUrl = "http://hyperphor.com/";
     var seomozUrl = "http://seomoz.org";
-    var seomozIconUrl = "http://linkback.herokuapp.com/public/linkscape.png";
+    var seomozIconUrl = "http://linkback.herokuapp.com/linkscape.png";
     var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
     insertEndMatter = function(pageUrl, container) {
 	var div = document.createElement('div');
 	div.setAttribute('style', 'font-size: 9pt; text-align: center; margin-bottom: 1pt');
 	container.appendChild(div);
-	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
-	insertText(div, ' ');
+// out of service
+//	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
+//	insertText(div, ' ');
 	insertLinkAny(div, homeUrl, "About");
 	insertText(div, ' ');
 	insertImgLink(div, homeIconUrl,homeSiteUrl);
