@@ -1,7 +1,7 @@
 (in-package :wu)
 
 (defun publish-website ()
-  (publish-directory :path "/app/public/"
+  (publish-directory :destination "/app/public/"
 		     :prefix "/"))
 
 
