@@ -1,0 +1,123 @@
+<html>
+
+<head>
+<title>LinkBack: bidirectional linking on the cheap</title>
+</head>
+
+<body>
+<h1>LinkBack: bidirectional linking on the cheap</h1>
+
+<div style="border:2px red solid;margin:10px;padding:5px;width:500px;">
+<b>Out of Service</b>:  Yahoo has discontinued their Site Explorer API which this hack was using, so it is not working until I can find and implement a replacement.
+</div>
+
+<h2>Introduction</h2>
+
+<table>
+<tr>
+<td>
+LinkBack is a browser extension that will automatically display incoming links for any web page you visit.  Linkbacks show up in an overlay window.  Here we see what it looks like when browsing this very page -- revealing that at the time of writing, <a href="http://lyricsplayground.com/alpha/songs/b/biginjapan.shtml">I'm big in Japan</a>.  Irashaimase!
+
+<h4>Quickish Download</h4>
+<ul>
+<li>Get <a href="http://www.mozilla.com/en-US/firefox/">Firefox</a>.
+<li>Get <a href="http://greasemonkey.mozdev.org/">Greasemonkey</a>.
+<li><a href="linkback.user.js">Click here</a> and follow the instructions.
+</ul>
+</td>
+<td>
+<center>
+<img src="big-in-japan.png"/>
+</center>
+</td>
+</tr>
+</table>
+
+
+<h2> The Bidirectional Web</h2>
+
+Ted Nelson coined the term Hypertext over 30 years ago, and articulated its principles, most of which have been ignored in the triumph of the Web.  This is merely one instance of the general <a href="http://www.dreamsongs.com/WorseIsBetter.html">"worse is better" principle</a>, which essentially says that doing the wrong thing in a way that lowers adoption barriers will beat doing the right thing every time.  See the triumph of C over Lisp for an example dearer to my heart.
+
+<p>
+The corollary of this principle is that all the people who charged off in the worse direction will eventually realize their problems and start integrating elements of the better idea into their sunk investments in doing things the wrong way.  Thus, Java started off as an attempt to graft Lisp-style memory management onto a C syntax language, and now they are beginning to discover the joys of scripting and dynamic typing.  But I digress.
+
+<p>
+One of the principle elements of Nelson's vision that was left out of the web is the <a href="http://xanadu.com/xuTheModel/">inherent bidirectionality of hyperlinks</a>.  This just means that a link from A to B should be visible, and traversable, from B to A as well.	 A simple idea, but suprisingly difficult to implement if you start with the sort of document-centric model that the WWW uses.  
+
+<p>
+Another (related) principle was that links were inherently annotations, and that the whole point of them was to allow a third party to comment on somebody else's text.  This property is absent from the web, and difficult to implement.
+
+<h2>The Dream of a Lifetime</h2>
+
+There have been efforts over the years to add the ability to have backlinks and annotation to the web (<a href="http://www.firstmonday.org/issues/issue4_10/margolis/">Third Voice</a>, <a href="http://zesty.ca/crit/">CritLink</a>, <a href="http://www.w3.org/2001/Annotea/">Annotea</a>). I myself briefly tried to get a web startup going ten years ago that would do something similar.  None of these has taken off.  Other related efforts are emerging as part of <a href="http://en.wikipedia.org/wiki/Trackback">blogging software and protocols</a>, but these have some flaws:  they are limited in scope, and require the cooperation of the owner of the source document.
+
+<p>
+Here's another push in the direction of the good; much simpler, cheaper, and cruder than any of the above.  Linkback is a Greasemonkey extension that makes use of <a href="http://developer.yahoo.com/search/">Yahoo Web Services</a> to support a primitive form of automatic back-linking.  Of course, this isn't really bidirectional linking in the classic sense. Links are still one-way, all this does is make links that go either to or from a page visible, whereas before all you saw were the from links.  Still, it's better than nothing, it adds an interesting new dimension to web browsing, while offering a glimpse of where we could be someday.  And it took an afternoon to hack together.
+
+<h2>To install: </h2>
+
+First, you need to <a href="http://greasemonkey.mozdev.org/">download and install Greasemonkey</a> (and Firefox if you aren't already using it).
+<p>
+Then <a href="linkback.user.js">click here</a> and follow the instructions.
+<p>
+To use, do nothing. Linkbacks will automatically appear when available. You can drag the panel around by the title bar, or minimize the results if you want to stop seeing them (persists across page changes).  To turn it off entirely, use the Greasemonkey icon at the bottom-right of the Firefox window.
+
+
+<h2>Caveats</h2>
+
+Linkback depends on single point of service (presently Yahoo) which won't scale if too many people start using this. The provider may grow unhappy and shut down services. We're also completely dependent on what they think of as a relevant Linkback.
+<p>
+But more importantly this hack can <b>violate your privacy</b>, because it is sending your browsing history to the provider. 
+<p>
+On the other hand, you already give up a lot of this information to search engines.  For instance, Yahoo and Google record not only your searches, but the pages you pick from search results.  So, given that your privacy is already compromised, you might as well let a little more information out.  An alternative is to use <a href="http://tor.eff.org/">Tor</a> or one of these <a href="http://www.freeproxy.ru/en/free_proxy/cgi-proxy.htm">anonymizing proxies</a> -- if you try one of those options, please let me know.
+</ul>
+<table>
+<tr>
+<td width="600px">
+<h2>Credits</h2>
+Author: <a href="http://hyperphor.com">Mike Travers</a>, mt(at)alum.mit.edu
+<p>
+Tools:
+<ul>
+<li><a href="http://greasemonkey.mozdev.org/">Greasemonkey</a>
+<li><a href="http://developer.yahoo.com/search/">Yahoo Web Services</a>
+</ul>
+<p>
+Feedback welcome.  
+<p>
+</td>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-7068577046933817";
+google_ad_width = 250;
+google_ad_height = 250;
+google_ad_format = "250x250_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_color_border = "336699";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "008000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+</tr>
+</table>
+<!-- Selfawareness -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-345282-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+
+
+</html>

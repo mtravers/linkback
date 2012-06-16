@@ -11,6 +11,7 @@
 	      :serial t      
 	      :components
 	      ((:file "server")
+	       (:file "website")
 	       (:file "heroku"))
 	      )))
 
