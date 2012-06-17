@@ -65,7 +65,9 @@
       (json:encode-json 
        (mapcar #'(lambda (result)
 		   `(("url" . ,(mt:string+ "http://" (car result)))
-		     ("title" . ,(cadr result))))
+		     ("title" . ,(if (zerop (length (cadr result)))
+				     (car result)
+				     (cadr result)))))
 	       results)
        *html-stream*))))
 

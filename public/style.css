@@ -1,0 +1,14 @@
+body {
+    font-family: 'Gill Sans'
+}
+
+
+.signup_button {
+    border:1px solid #0CF;
+    margin: 10px;
+    padding: 20px;
+    font-size: 16pt;
+    text-decoration: none;
+    color: white;
+    background-color: #44d;
+}
