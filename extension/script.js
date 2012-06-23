@@ -53,6 +53,18 @@ var linkWindow;
 function  makeWindow() {
     if (linkWindow == null) {
 
+addGlobalStyle(
+'.linkback {  position: absolute; width: 300px;  height: 10px;  right: 0;  top: 0;  z-index:1999; font: normal normal normal 10pt arial}' +
+'.linkbacktitle {  background:#333399; cursor:move; color:white; padding: 2px; font-weight: bold}' +
+'.linkbackinner {  border:1px solid #06060a;  background:#efefff;  text-align: left;  opacity:0.85; }' +
+'.linkbackinner ul { list-style-type: disc ; margin-left: 1px; padding-left: 15px}' +
+'.linkbackinner li { margin-top: 1px; margin-bottom: 1px; margin-left: 1px; color: gray;  }' +
+'.linkbackinner a { font: normal normal normal 10pt arial; text-decoration: none   }' +
+'.linkbackinner a:link {  color: #0000DD;   }' +
+'.linkbackinner a:visited {  color: #AF00AF;  }' +
+'.linkbackinner a:hover {  background-color: #f4dc8d;}');
+
+
 	var body = document.getElementsByTagName('body')[0];
 	var div = document.createElement('div');
 	div.setAttribute('id', 'LinkBack');
@@ -80,6 +92,10 @@ function  makeWindow() {
 	var ul = document.createElement('ul');
 	divStyled.appendChild(ul);
 	linkWindow = ul;
+
+
+
+
     }
     return linkWindow;
 }
@@ -162,6 +178,20 @@ function opencloseUpdate() {
 	divStyled.style.visibility = "hidden";
     }
 }
+
+function addGlobalStyle(css) {
+    var head, style;
+    head = document.getElementsByTagName('head')[0];
+    if (!head) { return; }
+    style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = css;
+    head.appendChild(style);
+}
+
+
+
+
 
 
 
