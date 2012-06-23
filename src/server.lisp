@@ -39,14 +39,22 @@
 
 ;;; ah, this works
 (defun test-basic-auth (page)
-  (let ((url (seomoz-query-url page)))
+  (let ((url (seomoz-query-url-basic-auth page)))
     (print url)
     (drakma:http-request url :basic-authorization (list *access-id* *secret*))))
 
+;;; successes come out as strings, errors as byte vectors, pkm!
+(defun coerce-to-string (result)
+  (etypecase result
+    (string result)
+    (simple-vector (mt:vector->string result))))
+
 (defun seomoz-query (page)
-  (let* ((url (seomoz-query-url-basic-auth page))
+  (mt:plet* ((url (seomoz-query-url page))
 	 (json
-	  (json:decode-json-from-string (drakma:http-request url :basic-authorization (list *access-id* *secret*)))))
+	  (json:decode-json-from-string (coerce-to-string (drakma:http-request url :basic-authorization (list *access-id* *secret*))))))
+	    (when (assocdr :error--message json)
+	      (error "Error from server: ~A" json))
     (mapcar #'(lambda (elt) (list (mt:assocdr :uu elt) (mt:assocdr :ut elt))) json)))
 
 ;;; Server
@@ -71,3 +79,23 @@
 	       results)
        *html-stream*))))
 
+;;; HTML service
+
+(publish :path "/linkback.html"
+	 :content-type "text/html"
+	 :function 'linkback-html-service)
+
+(defun linkback-html-service (req ent)
+  (let* ((page (trim-page-url (request-query-value "page" req)))
+	 (results (seomoz-query page)))
+    (with-http-response-and-body (req ent)
+      (html 
+       ((:div :style "background-color: #FDE")
+	(:ul
+	 (dolist (result results)
+	   (html
+	    (:ul
+	     ((:a :href (mt:string+ "http://" (car result)))
+	      (:princ-safe (if (zerop (length (cadr result)))
+				     (car result)
+				     (cadr result)))))))))))))

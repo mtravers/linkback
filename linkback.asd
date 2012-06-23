@@ -11,6 +11,7 @@
 	      :serial t      
 	      :components
 	      ((:file "server")
+	       (:file "thtml")		;belongs in wuwei
 	       (:file "website")
 	       (:file "heroku"))
 	      )))

@@ -14,7 +14,7 @@
 
 (load (make-pathname :directory *build-dir* :defaults "local.lisp"))
 
-(initialize-application)
+(initialize-application :home *build-dir*)
 
 (net.aserve:start :port 1666)
 

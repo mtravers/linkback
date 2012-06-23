@@ -1,4 +1,5 @@
 wupub
 local.lisp
 *~
-.#
+.\#
+*.dx64fsl

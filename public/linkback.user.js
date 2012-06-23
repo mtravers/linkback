@@ -59,7 +59,7 @@ function getElementText(node) {
   function() {
 
  // some important parameters
-      var nResults = 12;
+      var nResults = 12;	// not presently used...
 
   var Drag = function(){ this.init.apply( this, arguments ); };
 

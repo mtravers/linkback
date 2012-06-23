@@ -9,15 +9,16 @@
 <h1>LinkBack: adding a dimension to the web</h1>
 
 
-<h2>Introduction</h2>
+
 
 <table>
 <tr>
 <td>
-LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  Here we see what it looks like when browsing this very page -- revealing that at the time of writing, <a href="http://lyricsplayground.com/alpha/songs/b/biginjapan.shtml">I'm big in Japan</a>.  Irashaimase!
+<h2>Introduction</h2>
+LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  
+<td>
+<h2>Installation</h2>
 
-<h4>Installation</h4>
-<ul>
 
 <!-- #if expr="wu::*chrome?*" -->
 <a class="signup_button" href="/linkback.user.js">Install</a>
@@ -25,15 +26,11 @@ LinkBack is a browser extension for Chrome that will automatically display incom
 For now, LinkBack only works on Chrome.
 <!--#endif -->
 
-<p>
 
-
-</ul>
 </td>
+
+
 <td>
-<center>
-<img src="big-in-japan.png"/>
-</center>
 </td>
 </tr>
 </table>
@@ -96,6 +93,8 @@ try {
 var pageTracker = _gat._getTracker("UA-345282-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
+
+<script type="text/javascript" src="linkback.user.js"></script>
 
 </body>
 
