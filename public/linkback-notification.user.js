@@ -180,6 +180,41 @@ function addGlobalStyle(css) {
   }
 
 
+      // only for permission
+  makeWindow = function() {
+      if (linkWindow == null) {
+
+	  var body = document.getElementsByTagName('body')[0];
+	  var div = document.createElement('div');
+	  div.setAttribute('id', 'LinkBack');
+	  div.setAttribute('class', 'linkback');
+	  var title = document.createElement('div');   
+	  title.setAttribute('class', 'linkbacktitle');
+	  insertText(title, 'Linkback');
+	  div.appendChild(title);
+
+	  divStyled=document.createElement('div');
+	  divStyled.setAttribute('class','linkbackinner');
+	  
+	  div.appendChild(divStyled);
+
+	  openclose = document.createElement('div');
+	  openclose.setAttribute('style', 'position: absolute; right: 4px; top: 4px; cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
+	  openclose.addEventListener('click', openCloseHandler, true);
+	  opencloseUpdate();
+	  title.appendChild(openclose);
+
+	  body.appendChild(div);
+	  
+	  title.drag = new Drag(title, div);
+
+	  var ul = document.createElement('ul');
+	  divStyled.appendChild(ul);
+	  linkWindow = ul;
+      }
+      return linkWindow;
+  }
+
     // borrowed from Prototype
     unescapeHTML = function(text) {
 	var div = document.createElement('div');
@@ -196,16 +231,17 @@ function addGlobalStyle(css) {
 	    center.createHTMLNotification("http://localhost:1666/linkback.html?page=" + pageUrl);
 	}
 	else {
-	    
-
-	center.requestPermission(function () {
-
-	});
+	    center.requestPermission(function () {
+		center.createHTMLNotification("http://localhost:1666/linkback.html?page=" + pageUrl);
+	    });
+	}
 
     }
 
     if (onTop()) {
 	if (open) {
+	    
+
 	    doLookup();
 	}
     }
