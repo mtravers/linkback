@@ -50,7 +50,7 @@
     (simple-vector (mt:vector->string result))))
 
 (defun seomoz-query (page)
-  (mt:plet* ((url (seomoz-query-url page))
+  (let* ((url (seomoz-query-url page))
 	 (json
 	  (json:decode-json-from-string (coerce-to-string (drakma:http-request url :basic-authorization (list *access-id* *secret*))))))
 	    (when (assocdr :error--message json)
@@ -98,4 +98,4 @@
 	     ((:a :href (mt:string+ "http://" (car result)))
 	      (:princ-safe (if (zerop (length (cadr result)))
 				     (car result)
-				     (cadr result)))))))))))))
+				     (cadr result)))))))))))))*
