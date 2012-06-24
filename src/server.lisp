@@ -29,9 +29,6 @@
 	  ))
 |#
 
-(defun bytes->string (bytes)
-  (coerce (mapcar #'code-char (coerce bytes 'list)) 'string))
-
 (defun test (page)
   (let ((url (seomoz-query-url page)))
     (print url)
@@ -62,9 +59,11 @@
 	 :function 'linkback-service)
 
 (defun trim-page-url (url)
-  (if (mt:string-prefix-equals url "http://")
-      (subseq url 7)
-      url))
+  (multiple-value-bind (match? strings)
+      (cl-ppcre:scan-to-strings "^\\w+://(.*)" url)
+    (if match?
+	(svref strings 0)
+	url)))
 
 (defun linkback-service (req ent)
   (let* ((page (trim-page-url (request-query-value "page" req)))
