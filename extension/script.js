@@ -85,12 +85,6 @@ function  makeWindow() {
 	opencloseUpdate();
 	title.appendChild(openclose);
 
-	// float at bottom support
-	// window.addEventListener('scroll', function() {
-	//     div.setAttribute('
-	// }
-
-
 	body.appendChild(div);
 	
 	//	title.drag = new Drag(title, div);
@@ -177,11 +171,11 @@ function openCloseHandler() {
 function opencloseUpdate() {
     if (open) {
 	openclose.innerHTML = '-';
-	divStyled.style.visibility = "visible";
+	divStyled.style.display = null; // note: setting to inline here does not work because it propagates downward to where it doesn't belong...css pkm
     }
     else {
 	openclose.innerHTML = '+';	  
-	divStyled.style.visibility = "hidden";
+	divStyled.style.display = "none";
     }
 }
 
