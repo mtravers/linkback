@@ -6,6 +6,8 @@ var seomozUrl = "http://seomoz.org";
 var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
 var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
+var openclose;
+
 function doPopup() {
     var pageUrl = document.location.href;
     if (!blockUrl(pageUrl)) {
@@ -79,9 +81,7 @@ function  makeWindow() {
 	
 	div.appendChild(divStyled);
 
-	openclose = document.createElement('div');
-	openclose.setAttribute('style', 'position: absolute; right: 4px; top: 4px; cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
-	openclose.addEventListener('click', openCloseHandler, true);
+	openclose = insertOpenClose();
 	opencloseUpdate();
 	title.appendChild(openclose);
 
@@ -92,12 +92,15 @@ function  makeWindow() {
 	var ul = document.createElement('ul');
 	divStyled.appendChild(ul);
 	linkWindow = ul;
-
-
-
-
     }
     return linkWindow;
+}
+
+function insertOpenClose() {
+    var opener  = document.createElement('div');
+    opener.setAttribute('style', 'position: absolute; right: 4px; top: 4px; cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
+    opener.addEventListener('click', openCloseHandler, true);
+    return opener;
 }
 
 function insertLink(url, title) {
@@ -126,6 +129,12 @@ function insertEndMatter(pageUrl, container) {
     insertImgLink(div, homeIconUrl,homeSiteUrl);
     insertText(div, ' ');
     insertImgLink(div, seomozIconUrl, seomozUrl);
+    
+    // additional opener -- not quite the right thing but better than nothing for now.
+    var opener = insertOpenClose();
+    opener.setAttribute('style', 'display:inline; position: absolute; right: 4px;  cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
+    div.appendChild(opener);
+
 }
 
 
