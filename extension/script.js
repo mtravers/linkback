@@ -17,7 +17,11 @@ function doPopup() {
 }
 
 function makeQueryUrl(pageUrl) {
-    return server + '/linkback-srv?page=' + encodeURI(pageUrl);
+    return server + '/linkback-srv?page=' + encodeURIComponent(pageUrl);
+}
+
+function makeMoreUrl(pageUrl) {
+    return server + '/linkback.html?page=' + encodeURIComponent(pageUrl);
 }
 
 function blockUrl(pageUrl) {
@@ -37,7 +41,7 @@ function doQuery(pageUrl) {
 		    insertLink(result.url, result.title);
 		}
 		if (results.length > 0) {
-		    insertEndMatter(pageUrl, divStyled);
+		    insertEndMatter(pageUrl, divStyled, results);
 		}
 	    }
 	    else {
@@ -54,6 +58,9 @@ var linkWindow;
 
 function  makeWindow() {
     if (linkWindow == null) {
+
+	var resetURL = chrome.extension.getURL("reset.css");
+	addStyleLink(resetURL);
 
 	addGlobalStyle(
 	    '.linkback {  position: fixed; width: 300px; right: 0px; bottom: 0px; z-index:1999; font: normal normal normal 10pt arial}' +
@@ -117,13 +124,14 @@ function insertLinkAny(container, url, title) {
     container.appendChild(link);
 }
 
-function insertEndMatter(pageUrl, container) {
+function insertEndMatter(pageUrl, container, results) {
     var div = document.createElement('div');
     div.setAttribute('style', 'font-size: 9pt; text-align: center; margin-bottom: 1pt');
     container.appendChild(div);
-    // out of service
-    //	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
-    //	insertText(div, ' ');
+    if (results.length >= 20) {	// limit imposed by server
+	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
+    	insertText(div, ' ');
+    }
     insertLinkAny(div, homeUrl, "About");
     insertText(div, ' ');
     insertImgLink(div, homeIconUrl,homeSiteUrl);
@@ -188,13 +196,26 @@ function opencloseUpdate() {
     }
 }
 
+
+function addStyleLink(href) {
+    var head, link;
+    head = document.getElementsByTagName('head')[0];
+    if (!head) { return; }
+    link = document.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = href;
+    head.appendChild(link);
+
+}
+
 function addGlobalStyle(css) {
     var head, style;
     head = document.getElementsByTagName('head')[0];
     if (!head) { return; }
     style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = css;
+    if (css) style.innerHTML = css;
     head.appendChild(style);
 }
 

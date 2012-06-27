@@ -1,5 +1,7 @@
 (in-package :wu)
 
+;; http://apiwiki.seomoz.org/w/page/13991141/Links%20API
+
 (defvar *access-id*)			;SEOMOZ parameters, initialized from config vars
 (defvar *secret*)
 
@@ -7,14 +9,17 @@
 (defun unix-current-time ()
   (- (get-universal-time) 2208988800))
 
-(defun seomoz-query-url (page)
+(defun seomoz-query-url (page &key limit offset)
   (let* ((expires (+ (unix-current-time) (* 1 60)))
 	 (signature (wu::hmac-sha1-string (format nil "~A~%~A" *access-id* expires) *secret* :bytes)))
-    (format nil "http://lsapi.seomoz.com/linkscape/links/~A?SourceCols=5&TargetCols=4&Scope=page_to_page&Sort=page_authority&Filter=External&AccessID=~A&Expires=~A&Signature=~A"
+    (format nil "http://lsapi.seomoz.com/linkscape/links/~A?SourceCols=5&TargetCols=4&Scope=page_to_page&Sort=page_authority&Filter=External&AccessID=~A&Expires=~A&Signature=~A~A~A"
 	    (uriencode-string page)
 	    *access-id*
 	    expires
-	    (uriencode-string (cl-base64:usb8-array-to-base64-string signature)))))
+	    (uriencode-string (cl-base64:usb8-array-to-base64-string signature))
+	    (if limit (format nil "&Limit=~A" limit) "")
+	    (if offset (format nil "&Offset=~A" offset) "")
+	    )))
 
 ;;; Alternate method (but the above works now, so this is not called)
 (defun seomoz-query-url-basic-auth (page)
@@ -46,8 +51,8 @@
     (string result)
     (simple-vector (mt:vector->string result))))
 
-(defun seomoz-query (page)
-  (let* ((url (seomoz-query-url page))
+(defun seomoz-query (page &rest args)
+  (let* ((url (apply #'seomoz-query-url page args))
 	 (json
 	  (json:decode-json-from-string (coerce-to-string (drakma:http-request url :basic-authorization (list *access-id* *secret*))))))
 	    (when (assocdr :error--message json)
@@ -67,7 +72,7 @@
 
 (defun linkback-service (req ent)
   (let* ((page (trim-page-url (request-query-value "page" req)))
-	 (results (seomoz-query page)))
+	 (results (seomoz-query page :limit 20)))
     (with-http-response-and-body (req ent :content-type "application/javascript")
       (json:encode-json 
        (mapcar #'(lambda (result)
@@ -84,17 +89,24 @@
 	 :content-type "text/html"
 	 :function 'linkback-html-service)
 
+;;; Argh, very temp I hope
+(defun de-unicode-string (s)
+  (dotimes (i (length s) s)
+    (when (> (char-code (char s i)) 255)
+      (setf (char s i) #\-))))
+
 (defun linkback-html-service (req ent)
   (let* ((page (trim-page-url (request-query-value "page" req)))
-	 (results (seomoz-query page)))
-    (with-http-response-and-body (req ent)
-      (html 
-       ((:div :style "background-color: #FDE")
-	(:ul
-	 (dolist (result results)
-	   (html
-	    (:ul
-	     ((:a :href (mt:string+ "http://" (car result)))
-	      (:princ-safe (if (zerop (length (cadr result)))
-				     (car result)
-				     (cadr result)))))))))))))*
+	 (results (seomoz-query page :limit 100)))
+    (with-http-response (req ent)
+      (with-http-body (req ent)
+	(html
+	 ((:div :style "background-color: #FDE")
+	  (:ul
+	   (dolist (result results)
+	     (html
+	      (:ul
+	       ((:a :href (mt:string+ "http://" (car result)))
+		(:princ (if (zerop (length (cadr result)))
+			    (car result)
+			    (de-unicode-string (cadr result)))))))))))))))
