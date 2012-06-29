@@ -1,0 +1,54 @@
+.linkback {  
+    position: fixed;
+    width: 300px;
+    right: 0px; 
+    bottom: 0px; 
+    z-index:1999; 
+    font: normal normal normal 10pt arial
+}
+
+.linkbacktitle {  
+    background:#333399; 
+    cursor:move; 
+    color:white; 
+    padding: 2px; 
+    font-weight: bold
+}
+
+.linkbackinner {
+    border:1px solid #06060a; 
+    background:#efefff; 
+    text-align: left; 
+    opacity:0.85; 
+}
+
+.linkbackinner ul {
+    list-style-type: disc ; 
+    margin-left: 1px; 
+    padding-left: 15px
+}
+
+.linkbackinner li { 
+    margin-top: 1px; 
+    margin-bottom: 1px; 
+    margin-left: 1px; 
+    color: gray; 
+}
+
+.linkbackinner a {
+    font: normal normal normal 10pt arial; 
+    text-decoration: none   
+}
+
+.linkbackinner a:link {
+    color: #0000DD;
+}
+
+.linkbackinner a:visited {
+    color: #AF00AF;  
+}
+
+.linkbackinner a:hover {
+    background-color: #f4dc8d; 
+}
+
