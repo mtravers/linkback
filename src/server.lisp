@@ -51,6 +51,19 @@
     (string result)
     (simple-vector (mt:vector->string result))))
 
+#| for development when service is down
+(defun seomoz-query (page &rest args)
+  '(("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")
+    ("http://hyperphor.com" "Lorem ipse dixit")))
+|# 
+
 (defun seomoz-query (page &rest args)
   (let* ((url (apply #'seomoz-query-url page args))
 	 (json

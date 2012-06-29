@@ -1,5 +1,6 @@
 .linkback {  
     position: fixed;
+    margin:10px;
     width: 300px;
     right: 0px; 
     bottom: 0px; 
@@ -7,25 +8,28 @@
     font: normal normal normal 10pt arial
 }
 
-.linkbacktitle {  
-    background:#333399; 
-    cursor:move; 
-    color:white; 
-    padding: 2px; 
-    font-weight: bold
+
+.linkbackfooter {
+    font-size: 9pt; 
+    text-align: center; 
+    border-top: 1px solid gray;
+    padding-top: 3px;
+    margin-bottom: 1pt;
 }
 
 .linkbackinner {
-    border:1px solid #06060a; 
+    border: 3px solid #AEAEF8;  
     background:#efefff; 
     text-align: left; 
     opacity:0.85; 
+    border-radius: 6px;
+    background: #161652;
 }
 
 .linkbackinner ul {
-    list-style-type: disc ; 
+    list-style-type: disc; 
     margin-left: 1px; 
-    padding-left: 15px
+    padding-left: 10px
 }
 
 .linkbackinner li { 
@@ -36,16 +40,16 @@
 }
 
 .linkbackinner a {
-    font: normal normal normal 10pt arial; 
+    font: normal normal normal 10pt Calibri; 
     text-decoration: none   
 }
 
 .linkbackinner a:link {
-    color: #0000DD;
+    color: #F1F5A0;
 }
 
 .linkbackinner a:visited {
-    color: #AF00AF;  
+    color: #EEE474;
 }
 
 .linkbackinner a:hover {

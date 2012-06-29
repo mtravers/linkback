@@ -4,7 +4,7 @@ var homeUrl = "http://hyperphor.com/webhack/greasemonkey/blurb.html";
 var homeSiteUrl = "http://linkback.herokuapp.com";
 var seomozUrl = "http://seomoz.org";
 var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
-var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
+// var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
 var openclose;
 
@@ -59,29 +59,18 @@ var linkWindow;
 function  makeWindow() {
     if (linkWindow == null) {
 
-	var resetURL = chrome.extension.getURL("reset.css");
-	addStyleLink(resetURL);
-
-	addGlobalStyle(
-	    '.linkback {  position: fixed; width: 300px; right: 0px; bottom: 0px; z-index:1999; font: normal normal normal 10pt arial}' +
-		'.linkbacktitle {  background:#333399; cursor:move; color:white; padding: 2px; font-weight: bold}' +
-		'.linkbackinner {  border:1px solid #06060a;  background:#efefff;  text-align: left;  opacity:0.85; }' +
-		'.linkbackinner ul { list-style-type: disc ; margin-left: 1px; padding-left: 15px}' +
-		'.linkbackinner li { margin-top: 1px; margin-bottom: 1px; margin-left: 1px; color: gray;  }' +
-		'.linkbackinner a { font: normal normal normal 10pt arial; text-decoration: none   }' +
-		'.linkbackinner a:link {  color: #0000DD;   }' +
-		'.linkbackinner a:visited {  color: #AF00AF;  }' +
-		'.linkbackinner a:hover {  background-color: #f4dc8d;}');
-
+	addStyleLink(chrome.extension.getURL("reset.css"));
+	addStyleLink(chrome.extension.getURL("linkback.css"));
 
 	var body = document.getElementsByTagName('body')[0];
 	var div = document.createElement('div');
 	div.setAttribute('id', 'LinkBack');
 	div.setAttribute('class', 'linkback');
-	var title = document.createElement('div');   
-	title.setAttribute('class', 'linkbacktitle');
-	insertText(title, 'Linkback');
-	div.appendChild(title);
+
+//	var title = document.createElement('div');   
+//	title.setAttribute('class', 'linkbacktitle');
+//	insertText(title, 'Linkback');
+//	div.appendChild(title);
 
 	divStyled=document.createElement('div');
 	divStyled.setAttribute('class','linkbackinner');
@@ -90,7 +79,7 @@ function  makeWindow() {
 
 	openclose = insertOpenClose();
 	opencloseUpdate();
-	title.appendChild(openclose);
+//	title.appendChild(openclose);
 
 	body.appendChild(div);
 	
@@ -126,16 +115,16 @@ function insertLinkAny(container, url, title) {
 
 function insertEndMatter(pageUrl, container, results) {
     var div = document.createElement('div');
-    div.setAttribute('style', 'font-size: 9pt; text-align: center; margin-bottom: 1pt');
+    div.setAttribute('class','linkbackfooter');
     container.appendChild(div);
     if (results.length >= 20) {	// limit imposed by server
 	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
     	insertText(div, ' ');
     }
-    insertLinkAny(div, homeUrl, "About");
+    insertLinkAny(div, homeUrl, "Linkback");
     insertText(div, ' ');
-    insertImgLink(div, homeIconUrl,homeSiteUrl);
-    insertText(div, ' ');
+//    insertImgLink(div, homeIconUrl,homeSiteUrl);
+//    insertText(div, ' ');
     insertImgLink(div, seomozIconUrl, seomozUrl);
     
     // additional opener -- not quite the right thing but better than nothing for now.
@@ -208,17 +197,6 @@ function addStyleLink(href) {
     head.appendChild(link);
 
 }
-
-function addGlobalStyle(css) {
-    var head, style;
-    head = document.getElementsByTagName('head')[0];
-    if (!head) { return; }
-    style = document.createElement('style');
-    style.type = 'text/css';
-    if (css) style.innerHTML = css;
-    head.appendChild(style);
-}
-
 
 doPopup();
 

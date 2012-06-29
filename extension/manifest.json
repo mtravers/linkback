@@ -16,6 +16,6 @@
 	    "js": ["script.js"]
 	}
     ],
-    "web_accessible_resources": ["reset.css"]
+    "web_accessible_resources": ["reset.css", "linkback.css"]
 
 }
