@@ -7,11 +7,11 @@ var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
 // var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
 var openclose;
+var pageUrl;
 
 function doPopup() {
-    var pageUrl = document.location.href;
+    pageUrl = document.location.href;
     if (!blockUrl(pageUrl)) {
-	makeWindow();
 	doQuery(pageUrl);
     }
 }
@@ -28,6 +28,19 @@ function blockUrl(pageUrl) {
     return !(pageUrl.substring(0, 4) == "http");
 }
 
+function showResults(results) {
+    if (results.length > 0) {
+	makeWindow();
+	for (var i=0; i<results.length; i++) {
+	    var result = results[i];
+	    insertLink(result.url, result.title);
+	}
+	if (results.length > 0) {
+	    insertEndMatter(pageUrl, divStyled, results);
+	}
+    }
+}
+
 function doQuery(pageUrl) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", makeQueryUrl(pageUrl), true);
@@ -36,13 +49,7 @@ function doQuery(pageUrl) {
 	    if (xhr.status = 200) {
 		// WARNING! Might be evaluating an evil script!
 		var results = eval("(" + xhr.responseText + ")");
-		for (var i=0; i<results.length; i++) {
-		    var result = results[i];
-		    insertLink(result.url, result.title);
-		}
-		if (results.length > 0) {
-		    insertEndMatter(pageUrl, divStyled, results);
-		}
+		showResults(results);
 	    }
 	    else {
 		insertError(xhr.status, xhr.statusText);
@@ -148,7 +155,8 @@ function unescapeHTML(text) {
 }
 
 function insertError(code, msg) {
-    insertText('Error: ' + code + ': ' + msg);
+    var container = makeWindow();
+    insertText(container, 'Error: ' + code + ': ' + msg);
 }
 
 

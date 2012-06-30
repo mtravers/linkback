@@ -6,7 +6,7 @@
 
 ;;; Load local copies of portableaserve and wuwei, since quicklisp's are broken
 ;;; (You can get these from github.com/mtravers.  Put them the repos directory).
-(mapc #'load (directory (make-pathname :directory  '(:relative "repos" :wild-inferiors)
+(mapc #'load (directory (make-pathname :directory (append *build-dir* '("repos" :wild-inferiors))
 				       :name :wild
 				       :type "asd")))
 

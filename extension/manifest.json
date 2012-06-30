@@ -11,7 +11,7 @@
 	{
 	    "matches": ["<all_urls>"],
 	    // there are some content pages in google but no way to pick them out unfortunately
-	    "exclude_matches": ["*://*.google.com/*", "https://www.facebok.com/*", "http://twitter.com/*"],
+	    "exclude_matches": ["*://*.google.com/*", "https://www.facebook.com/", "http://twitter.com/"],
 	    "js": ["script.js"]
 	}
     ],
