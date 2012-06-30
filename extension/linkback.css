@@ -1,6 +1,6 @@
 .linkback {  
     position: fixed;
-    margin:10px;
+    margin:15px;
     width: 300px;
     right: 0px; 
     bottom: 0px; 
@@ -18,8 +18,9 @@
 }
 
 .linkbackinner {
-    border: 3px solid #AEAEF8;  
-    background:#efefff; 
+    border: 1px solid #AEAEF8;  
+    background: #efefff; 
+    box-shadow: 6px 6px 3px #888;
     text-align: left; 
     opacity:0.85; 
     border-radius: 6px;
@@ -53,6 +54,6 @@
 }
 
 .linkbackinner a:hover {
-    background-color: #f4dc8d; 
+    background-color: #606462;
 }
 
