@@ -49,7 +49,7 @@
 (defun coerce-to-string (result)
   (etypecase result
     (string result)
-    (simple-vector (mt:vector->string result))))
+    (array (mt:vector->string result))))
 
 #| for development when service is down
 (defun seomoz-query (page &rest args)
@@ -68,12 +68,13 @@
   (let* ((url (apply #'seomoz-query-url page args))
 	 (json
 	  (json:decode-json-from-string (coerce-to-string (drakma:http-request url :basic-authorization (list *access-id* *secret*))))))
-	    (when (assocdr :error--message json)
-	      (error "Error from server: ~A" json))
+    (when (assocdr :error--message json)
+      (error 'http-error :response (assocdr :status json) :message (format nil "Error from server: ~A" json)))
     (mapcar #'(lambda (elt) (list (mt:assocdr :uu elt) (mt:assocdr :ut elt))) json)))
 
 ;;; Server
 (publish :path "/linkback-srv"
+	 :content-type "application/javascript"
 	 :function 'linkback-service)
 
 (defun trim-page-url (url)
@@ -83,18 +84,43 @@
 	(svref strings 0)
 	url)))
 
+(define-condition http-error (error) 
+  ((response :initarg :response :initform *response-internal-server-error*)
+   (message :initarg :message :initform nil))
+#+ACL  (:default-initargs :format-control  "HTTP error ~A: ~A")
+  )
+
+(defmacro with-http-error-handling ((req ent &key handler) &body body)
+  `(handler-case (progn ,@body)
+      (http-error (c)
+	   (with-http-response-and-body (,req ,ent :response (slot-value c 'response) :content-type :text)
+	     ,handler))
+     (error (c)
+       (with-http-response-and-body (,req ,ent 
+					 :response *response-internal-server-error*
+					 :content-type :text)
+	 ,handler))))
+
+;;;; +++ poss for wuwei
+(defmacro with-json-error-handling ((req ent) &body body)
+  `(with-http-error-handling (,req ,ent :handler 
+				   (json:encode-json `((:|error| . ,(princ-to-string c)))
+						     *html-stream*))
+     ,@body))
+
 (defun linkback-service (req ent)
-  (let* ((page (trim-page-url (request-query-value "page" req)))
-	 (results (seomoz-query page :limit 20)))
-    (with-http-response-and-body (req ent :content-type "application/javascript")
-      (json:encode-json 
-       (mapcar #'(lambda (result)
-		   `(("url" . ,(mt:string+ "http://" (car result)))
-		     ("title" . ,(if (zerop (length (cadr result)))
-				     (car result)
-				     (cadr result)))))
-	       results)
-       *html-stream*))))
+  (with-json-error-handling (req ent )
+    (let* ((page (trim-page-url (request-query-value "page" req)))
+	   (results (seomoz-query page :limit 20)))
+      (with-http-response-and-body (req ent)
+	(json:encode-json
+	 (mapcar #'(lambda (result)
+		     `(("url" . ,(mt:string+ "http://" (car result)))
+		       ("title" . ,(if (zerop (length (cadr result)))
+				       (car result)
+				       (cadr result)))))
+		 results)
+	 *html-stream*)))))
 
 ;;; HTML service
 
