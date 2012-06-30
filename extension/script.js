@@ -94,13 +94,13 @@ function showResultsClosed(results) {
     div.setAttribute('class','linkbackfooter');
     pane.appendChild(div);
     insertText(div, 'LinkBack');
-    div.addEventListener('click', openCloseHandler, true);
+    var opener = insertOpenClose();
+    div.appendChild(opener);
 }
 
 function openCloseHandler() {
     var open = !openp();
     sessionStorage.setItem('linkback_open', open);
-//    opencloseUpdate();
     if (open) {
 	// prob need to eliminate some stuff
 	pane.innerHTML = '';
@@ -110,9 +110,6 @@ function openCloseHandler() {
 	showResultsClosed(savedResults);
     }
 }
-
-
-
 
 function  makeWindow() {
     if (pane == null) {
@@ -129,22 +126,18 @@ function  makeWindow() {
 	pane.setAttribute('class','linkbackinner');
 	
 	div.appendChild(pane);
-
-	openclose = insertOpenClose();
-	opencloseUpdate();
-
 	body.appendChild(div);
-	
 
     }
     return pane;
 }
 
 function insertOpenClose() {
-    var opener  = document.createElement('div');
-    opener.setAttribute('style', 'position: absolute; right: 4px; top: 4px; cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
-    opener.addEventListener('click', openCloseHandler, true);
-    return opener;
+    openclose  = document.createElement('div');
+    openclose.setAttribute('class', 'linkbackopener');
+    opencloseUpdate();
+    openclose.addEventListener('click', openCloseHandler, true);
+    return openclose;
 }
 
 function insertLink(url, title) {
@@ -177,7 +170,6 @@ function insertEndMatter(pageUrl, container, results) {
     
     // additional opener -- not quite the right thing but better than nothing for now.
     var opener = insertOpenClose();
-    opener.setAttribute('style', 'display:inline; position: absolute; right: 4px;  cursor: pointer; background-color: #6699CC; border: 1px; border-style: solid; border-color: gray; text-align: center; width: 14px; height: 14px; font-size:9pt');
     div.appendChild(opener);
 
 }
@@ -203,7 +195,7 @@ function insertError(code, msg) {
 
 function insertImgLink(container, imgUrl, linkUrl) {
     var link = document.createElement('a');	
-    link.setAttribute('href', linkUrl);
+    if (linkUrl) link.setAttribute('href', linkUrl);
     var img = document.createElement('img');
     img.setAttribute('src', imgUrl);
     img.setAttribute('border', '0');
@@ -213,14 +205,23 @@ function insertImgLink(container, imgUrl, linkUrl) {
 }
 
 
+function insertImg(container, imgUrl) {
+    var img = document.createElement('img');
+    img.setAttribute('src', imgUrl);
+    img.setAttribute('border', '0');
+    img.setAttribute('style', 'vertical-align: middle');
+    container.appendChild(img);
+}
+
+
+
 function opencloseUpdate() {
+    openclose.innerHTML = ''
     if (openp()) {
-	openclose.innerHTML = '-';
-//	pane.style.display = null; // note: setting to inline here does not work because it propagates downward to where it doesn't belong...css pkm
+	insertImg(openclose, chrome.extension.getURL("down.png"))
     }
     else {
-	openclose.innerHTML = '+';	  
-//	pane.style.display = "none";
+	insertImg(openclose, chrome.extension.getURL("up.png"))
     }
 }
 
@@ -233,7 +234,6 @@ function addStyleLink(href) {
     link.rel = 'stylesheet';
     link.href = href;
     head.appendChild(link);
-
 }
 
 doPopup();

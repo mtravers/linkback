@@ -5,10 +5,26 @@
     right: 0px; 
     bottom: 0px; 
     z-index:1999; 
-    font: normal normal normal 10pt arial
+    font: normal normal normal 10pt Calibri; 
+    color: #F1F5A0;
 }
 
+.linkbackopener {
+    display:inline; 
+    position: absolute; 
+    right: 6px;  
+    bottom: 6px;
+    cursor: pointer; 
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+}
 
+.linkbackopenr img  {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .linkbackfooter {
     font-size: 9pt; 
     text-align: center; 
