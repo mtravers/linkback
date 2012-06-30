@@ -63,6 +63,7 @@ function openp () {
 
 function showResults(results) {
     if (results != null && results.length > 0) {
+	savedResults = results;
 	if (openp()) {
 	    showResultsOpen(results);
 	}
@@ -74,6 +75,9 @@ function showResults(results) {
 
 function showResultsOpen(results) {
     makeWindow();
+    var ul = document.createElement('ul');
+    ul.setAttribute('id', 'linkback_ul');
+    pane.appendChild(ul);
     for (var i=0; i<results.length; i++) {
 	var result = results[i];
 	insertLink(result.url, result.title);
@@ -85,7 +89,6 @@ function showResultsOpen(results) {
 
 // need a graphic, but ok for now
 function showResultsClosed(results) {
-    savedResults = results;
     makeWindow();
     var div = document.createElement('div');
     div.setAttribute('class','linkbackfooter');
@@ -97,11 +100,14 @@ function showResultsClosed(results) {
 function openCloseHandler() {
     var open = !openp();
     sessionStorage.setItem('linkback_open', open);
-//    GM_setValue('LinkBackOpen', open);
 //    opencloseUpdate();
     if (open) {
 	// prob need to eliminate some stuff
+	pane.innerHTML = '';
 	showResultsOpen(savedResults);
+    } else {
+	pane.innerHTML = '';
+	showResultsClosed(savedResults);
     }
 }
 
@@ -129,9 +135,7 @@ function  makeWindow() {
 
 	body.appendChild(div);
 	
-	var ul = document.createElement('ul');
-	ul.setAttribute('id', 'linkback_ul');
-	pane.appendChild(ul);
+
     }
     return pane;
 }
