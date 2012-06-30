@@ -5,7 +5,7 @@
     "description": "Extension to display incoming links in a popup on any webpage.",
     "homepage_url": "http://linkback.herokuapp.com/",
     "permissions": [
-	"webRequest","<all_urls>"
+     "webRequest", "<all_urls>"
     ],
     "content_scripts": [
 	{

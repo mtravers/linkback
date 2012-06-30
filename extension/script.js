@@ -8,6 +8,8 @@ var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
 
 var openclose;
 var pageUrl;
+var pane;			// contents pane
+var savedResults;
 
 function doPopup() {
     pageUrl = document.location.href;
@@ -28,19 +30,6 @@ function blockUrl(pageUrl) {
     return !(pageUrl.substring(0, 4) == "http");
 }
 
-function showResults(results) {
-    if (results.length > 0) {
-	makeWindow();
-	for (var i=0; i<results.length; i++) {
-	    var result = results[i];
-	    insertLink(result.url, result.title);
-	}
-	if (results.length > 0) {
-	    insertEndMatter(pageUrl, divStyled, results);
-	}
-    }
-}
-
 function doQuery(pageUrl) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", makeQueryUrl(pageUrl), true);
@@ -54,17 +43,73 @@ function doQuery(pageUrl) {
 	    else {
 		insertError(xhr.status, xhr.statusText);
 	    }
-	    loaded = true;
 	}
     };
     xhr.send();
-
 }
 
-var linkWindow;
+// default to open
+function openp () {
+    var v = sessionStorage.getItem('linkback_open');
+    if (v == null) {
+	v = true;
+	sessionStorage.setItem('linkback_open', v);
+    } else {
+	v = (v == "true");	// argh
+    }
+    return v;
+}
+ 
+
+function showResults(results) {
+    if (results != null && results.length > 0) {
+	if (openp()) {
+	    showResultsOpen(results);
+	}
+	else {
+	    showResultsClosed(results);
+	}
+    }
+}
+
+function showResultsOpen(results) {
+    makeWindow();
+    for (var i=0; i<results.length; i++) {
+	var result = results[i];
+	insertLink(result.url, result.title);
+    }
+    if (results.length > 0) {
+	insertEndMatter(pageUrl, pane, results);
+    }
+}
+
+// need a graphic, but ok for now
+function showResultsClosed(results) {
+    savedResults = results;
+    makeWindow();
+    var div = document.createElement('div');
+    div.setAttribute('class','linkbackfooter');
+    pane.appendChild(div);
+    insertText(div, 'LinkBack');
+    div.addEventListener('click', openCloseHandler, true);
+}
+
+function openCloseHandler() {
+    var open = !openp();
+    sessionStorage.setItem('linkback_open', open);
+//    GM_setValue('LinkBackOpen', open);
+//    opencloseUpdate();
+    if (open) {
+	// prob need to eliminate some stuff
+	showResultsOpen(savedResults);
+    }
+}
+
+
+
 
 function  makeWindow() {
-    if (linkWindow == null) {
+    if (pane == null) {
 
 	addStyleLink(chrome.extension.getURL("reset.css"));
 	addStyleLink(chrome.extension.getURL("linkback.css"));
@@ -74,29 +119,21 @@ function  makeWindow() {
 	div.setAttribute('id', 'LinkBack');
 	div.setAttribute('class', 'linkback');
 
-//	var title = document.createElement('div');   
-//	title.setAttribute('class', 'linkbacktitle');
-//	insertText(title, 'Linkback');
-//	div.appendChild(title);
-
-	divStyled=document.createElement('div');
-	divStyled.setAttribute('class','linkbackinner');
+	pane=document.createElement('div');
+	pane.setAttribute('class','linkbackinner');
 	
-	div.appendChild(divStyled);
+	div.appendChild(pane);
 
 	openclose = insertOpenClose();
 	opencloseUpdate();
-//	title.appendChild(openclose);
 
 	body.appendChild(div);
 	
-	//	title.drag = new Drag(title, div);
-
 	var ul = document.createElement('ul');
-	divStyled.appendChild(ul);
-	linkWindow = ul;
+	ul.setAttribute('id', 'linkback_ul');
+	pane.appendChild(ul);
     }
-    return linkWindow;
+    return pane;
 }
 
 function insertOpenClose() {
@@ -107,7 +144,7 @@ function insertOpenClose() {
 }
 
 function insertLink(url, title) {
-    var container = makeWindow();
+    var container = document.getElementById('linkback_ul');
     var li = document.createElement('li');
     container.appendChild(li);
     insertLinkAny(li, url, title);
@@ -155,7 +192,7 @@ function unescapeHTML(text) {
 }
 
 function insertError(code, msg) {
-    var container = makeWindow();
+    var container = document.getElementById('linkback_ul');
     insertText(container, 'Error: ' + code + ': ' + msg);
 }
 
@@ -171,28 +208,17 @@ function insertImgLink(container, imgUrl, linkUrl) {
     container.appendChild(link);
 }
 
-var open;
-
-function openCloseHandler() {
-    open = !open;
-    //      GM_setValue('LinkBackOpen', open);
-    opencloseUpdate();
-    if (open && !loaded) {
-	doLookup();
-    }
-}
 
 function opencloseUpdate() {
-    if (open) {
+    if (openp()) {
 	openclose.innerHTML = '-';
-	divStyled.style.display = null; // note: setting to inline here does not work because it propagates downward to where it doesn't belong...css pkm
+//	pane.style.display = null; // note: setting to inline here does not work because it propagates downward to where it doesn't belong...css pkm
     }
     else {
 	openclose.innerHTML = '+';	  
-	divStyled.style.display = "none";
+//	pane.style.display = "none";
     }
 }
-
 
 function addStyleLink(href) {
     var head, link;
