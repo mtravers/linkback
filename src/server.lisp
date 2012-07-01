@@ -134,18 +134,31 @@
     (when (> (char-code (char s i)) 255)
       (setf (char s i) #\-))))
 
+(defparameter *page-size* 40)
+
 (defun linkback-html-service (req ent)
   (let* ((page (trim-page-url (request-query-value "page" req)))
-	 (results (seomoz-query page :limit 100)))
+	 (offset (ignore-errors (parse-integer (request-query-value "offset" req))))
+	 (results (seomoz-query page :limit *page-size* :offset offset)))
     (with-http-response (req ent)
       (with-http-body (req ent)
 	(html
+	 (:h2 "Links to "
+	      (link-to page page))
 	 ((:div :style "background-color: #FDE")
 	  (:ul
-	   (dolist (result results)
-	     (html
-	      (:ul
-	       ((:a :href (mt:string+ "http://" (car result)))
-		(:princ (if (zerop (length (cadr result)))
-			    (car result)
-			    (de-unicode-string (cadr result)))))))))))))))
+	   (if results
+	       (progn
+		 (when offset (html 
+			       (:h3 (:princ (format nil "Page ~A" (1+ (/ offset *page-size*)))))))
+		 (dolist (result results)
+		   (html
+		    (:ul
+		     ((:a :href (mt:string+ "http://" (car result)))
+		      (:princ (if (zerop (length (cadr result)))
+				  (car result)
+				  (de-unicode-string (cadr result))))))))
+		 (link-to "More" (format nil "/linkback.html?~A"
+					 (query-to-form-urlencoded `(("page" . ,page) ("offset" . ,(+ (or offset 0) *page-size*)))))))
+	       (html "No more results")))))))))
+

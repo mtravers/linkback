@@ -16,18 +16,18 @@ version: 2.9.0
 .linkback li,
 .linkback p,
 {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 
 .linkback img {
-	border: 0;
+    border: 0;
 }
 
 
 .linkback li {
-	list-style: none;
+    list-style: none;
 }
 
 
