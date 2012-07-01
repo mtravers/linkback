@@ -143,22 +143,27 @@
     (with-http-response (req ent)
       (with-http-body (req ent)
 	(html
-	 (:h2 "Links to "
-	      (link-to page page))
-	 ((:div :style "background-color: #FDE")
-	  (:ul
+	 (:head
+	  ((:link :type "text/css" :rel "stylesheet" :href "style.css")))
+	 (:body
+	  (:h2 "Links to "
+	       (link-to page page))
+
 	   (if results
 	       (progn
 		 (when offset (html 
 			       (:h3 (:princ (format nil "Page ~A" (1+ (/ offset *page-size*)))))))
-		 (dolist (result results)
-		   (html
-		    (:ul
-		     ((:a :href (mt:string+ "http://" (car result)))
-		      (:princ (if (zerop (length (cadr result)))
-				  (car result)
-				  (de-unicode-string (cadr result))))))))
-		 (link-to "More" (format nil "/linkback.html?~A"
-					 (query-to-form-urlencoded `(("page" . ,page) ("offset" . ,(+ (or offset 0) *page-size*)))))))
-	       (html "No more results")))))))))
+		 (html
+		  ((:ul :class "morelinks")
+		   (dolist (result results)
+		     (html
+		      (:li
+		       ((:a :href (mt:string+ "http://" (car result)))
+			(:princ (if (zerop (length (cadr result)))
+				    (car result)
+				    (de-unicode-string (cadr result))))))))))
+		 (when (= (length results) *page-size*)
+		   (link-to "More" (format nil "/linkback.html?~A"
+					   (query-to-form-urlencoded `(("page" . ,page) ("offset" . ,(+ (or offset 0) *page-size*))))))))
+	       (html "No more results"))))))))
 

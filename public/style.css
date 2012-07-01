@@ -2,7 +2,6 @@ body {
     font-family: 'Gill Sans'
 }
 
-
 .signup_button {
     border:1px solid #0CF;
     margin: 10px;
@@ -11,4 +10,19 @@ body {
     text-decoration: none;
     color: white;
     background-color: #44d;
+}
+
+/* copying the widget */
+.morelinks {
+    background: #161652;
+    font: normal normal normal 10pt Calibri; 
+    color: white;
+}
+.morelinks  a:link {
+    color: #F1F5A0;
+    text-decoration: none;
+}
+
+.morelinks  a:visited {
+    color: #EEE474;
 }
