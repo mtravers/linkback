@@ -35,7 +35,7 @@
 
 .linkbackinner {
     border: 1px solid #AEAEF8;  
-    box-shadow: 6px 6px 3px #888;
+    box-shadow: 4px 4px 2px #888;
     text-align: left; 
     opacity:0.85; 
     border-radius: 6px;
@@ -70,6 +70,7 @@
 }
 
 .linkbackinner a:hover {
-    background-color: #606060;
+    background-color: #EEEEE;
+    color: #161652;
 }
 

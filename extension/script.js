@@ -1,5 +1,5 @@
-// var server = 'http://linkback.herokuapp.com';
-var server = 'http://localhost:1666';
+var server = 'http://linkback.herokuapp.com';
+// var server = 'http://localhost:1666';
 var homeUrl = "http://hyperphor.com/webhack/greasemonkey/blurb.html";
 var homeSiteUrl = "http://linkback.herokuapp.com";
 var seomozUrl = "http://seomoz.org";
