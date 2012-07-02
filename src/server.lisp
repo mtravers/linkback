@@ -2,8 +2,8 @@
 
 ;; http://apiwiki.seomoz.org/w/page/13991141/Links%20API
 
-(defvar *access-id*)			;SEOMOZ parameters, initialized from config vars
-(defvar *secret*)
+(defvar *access-id* nil)			;SEOMOZ parameters, initialized from config vars
+(defvar *secret* nil)
 
 ;;; Current Unix UTC time
 (defun unix-current-time ()
