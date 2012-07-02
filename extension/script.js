@@ -232,6 +232,7 @@ function addStyleLink(href) {
     link = document.createElement('link');
     link.type = 'text/css';
     link.rel = 'stylesheet';
+    link.media = 'all';
     link.href = href;
     head.appendChild(link);
 }
