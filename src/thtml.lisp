@@ -58,7 +58,7 @@ Caveats:
 			 (maybe-write pre)
 			 (cond ((equal cmd "include")
 				(when output?
-				  (let* ((fname (assocadr "virtual" args :test #'string-equal))
+				  (let* ((fname (assocadr "file" args :test #'string-equal))
 					 (included-file (merge-pathnames fname file)))
 				    (output-thtml stream included-file))))
 			       ((equal cmd "lisp")
