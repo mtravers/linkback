@@ -9,6 +9,10 @@
 
 ;;; Want to put in a check for Chrome, but that requires either a templating engine or pulling the static page into code...
 
+(publish :path "/"
+	 :content-type "text/html"
+	 :function 'dyndex)
+
 (publish :path "/index.html"
 	 :content-type "text/html"
 	 :function 'dyndex)

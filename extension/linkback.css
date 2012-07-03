@@ -20,17 +20,27 @@
     vertical-align: middle;
 }
 
-.linkbackopenr img  {
+.linkbackopener img  {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
 .linkbackfooter {
     font-size: 9pt; 
     text-align: center; 
     border-top: 1px solid gray;
     padding-top: 3px;
     margin-bottom: 1pt;
+}
+
+.linkbackmore {
+    float: left;
+    margin-left: 8px;
+}
+.linkbackseo {
+    float: right;
+    margin-right: 18px;
 }
 
 .linkbackinner {
@@ -70,7 +80,7 @@
 }
 
 .linkbackinner a:hover {
-    background-color: #EEEEE;
+    background: #EEEEE;
     color: #161652;
 }
 

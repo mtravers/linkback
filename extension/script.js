@@ -1,6 +1,5 @@
 var server = 'http://linkback.herokuapp.com';
 // var server = 'http://localhost:1666';
-var homeUrl = "http://hyperphor.com/webhack/greasemonkey/blurb.html";
 var homeSiteUrl = "http://linkback.herokuapp.com";
 var seomozUrl = "http://seomoz.org";
 var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
@@ -152,6 +151,7 @@ function insertLinkAny(container, url, title) {
     link.setAttribute('href', url);
     insertText(link, title);
     container.appendChild(link);
+    return link;
 }
 
 function insertEndMatter(pageUrl, container, results) {
@@ -159,14 +159,13 @@ function insertEndMatter(pageUrl, container, results) {
     div.setAttribute('class','linkbackfooter');
     container.appendChild(div);
     if (results.length >= 20) {	// limit imposed by server
-	insertLinkAny(div, makeMoreUrl(pageUrl), "More");
-    	insertText(div, ' ');
+	var link = insertLinkAny(div, makeMoreUrl(pageUrl), "More");
+	link.setAttribute('class','linkbackmore');
     }
-    insertLinkAny(div, homeUrl, "Linkback");
+    insertLinkAny(div, homeSiteUrl, "Linkback");
     insertText(div, ' ');
-//    insertImgLink(div, homeIconUrl,homeSiteUrl);
-//    insertText(div, ' ');
-    insertImgLink(div, seomozIconUrl, seomozUrl);
+    var img = insertImgLink(div, seomozIconUrl, seomozUrl);
+    img.setAttribute('class','linkbackseo');    
     
     // additional opener -- not quite the right thing but better than nothing for now.
     var opener = insertOpenClose();
@@ -192,7 +191,6 @@ function insertError(code, msg) {
     insertText(container, 'Error: ' + code + ': ' + msg);
 }
 
-
 function insertImgLink(container, imgUrl, linkUrl) {
     var link = document.createElement('a');	
     if (linkUrl) link.setAttribute('href', linkUrl);
@@ -202,8 +200,8 @@ function insertImgLink(container, imgUrl, linkUrl) {
     img.setAttribute('style', 'vertical-align: middle');
     link.appendChild(img);
     container.appendChild(link);
+    return link;
 }
-
 
 function insertImg(container, imgUrl) {
     var img = document.createElement('img');
@@ -211,6 +209,7 @@ function insertImg(container, imgUrl) {
     img.setAttribute('border', '0');
     img.setAttribute('style', 'vertical-align: middle');
     container.appendChild(img);
+    return img;
 }
 
 

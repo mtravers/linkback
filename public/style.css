@@ -3,13 +3,17 @@ body {
 }
 
 .signup_button {
-    border:1px solid #0CF;
+    border:3px solid #AAA;
     margin: 10px;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     font-size: 16pt;
     text-decoration: none;
     color: white;
     background-color: #44d;
+    border-radius: 10px;
 }
 
 /* copying the widget */
