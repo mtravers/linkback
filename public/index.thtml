@@ -21,7 +21,7 @@ LinkBack is a browser extension for Chrome that will automatically display incom
 
 
 <!-- #if expr="wu::*chrome?*" -->
-<a class="signup_button" href="/linkback.user.js">Install</a>
+<a class="signup_button" href="/linkback.crx">Install</a>
 <!--#else -->
 For now, LinkBack only works on Chrome.
 <!--#endif -->
