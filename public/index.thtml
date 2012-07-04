@@ -13,21 +13,22 @@
 
 <table>
 <tr>
-<td width="50%">
+<td width="50%" >
 <h2>Introduction</h2>LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  For example, here's the <a href="http://en.wikipedia.org/wiki/Hypertext">Wikipedia entry for Hypertext</a> with LinkBack operating in the lower-right corner.
 <a href="hypertext.png"><img src="hypertext.png" style="width:450px;"/></a>
-<td>
+<td >
 <h2>Installation</h2>
 
 
 <!-- #if expr="wu::*chrome?*" -->
-<a class="signup_button" href="/linkback.crx">Install</a>
+<p>To install the Chrome extension, click the nice big button:</p>
+<p style="margin-top:50px;margin-left:auto;margin-right:auto;width:200px"> <a class="signup_button" href="/linkback.crx">Install</a></p>
 <!--#else -->
 For now, LinkBack only works on Chrome.
 <!--#endif -->
 
 <h2>Use</h2>
-Just browse. The popup will appear if and when any incoming links are found.  If the popup is intrusive it can be minimized with the handle at the lower-right.  To disable it entirely use the <a href="chrome://chrome/extensions/">Chrome extensions</a> page.
+Just browse. The popup will appear if and when any incoming links are found.  If the popup is intrusive it can be minimized with the handle at the lower-right.  To disable it entirely use the Chrome extensions page.
 <p>
 Note that LinkBack makes use of a free service from <a href="http://seomoz/org">seomoz.org</a> which is rate-limited, so if any large number of people start using this it will slow down.  If that becomes a problem some sort of payment might be required to get a reliable service, but I am not losing sleep over that right now.
 
@@ -43,7 +44,6 @@ Note that LinkBack makes use of a free service from <a href="http://seomoz/org">
 <h2>Background: The Bidirectional Web</h2>
 
 Ted Nelson coined the term Hypertext over 30 years ago, and <a href="http://www.cs.brown.edu/memex/ACM_HypertextTestbed/papers/60.html">articulated its principles</a>, most of which have been ignored in the triumph of the Web (<a href="#worse">see below</a>).
-<p>
 One of the principle elements of Nelson's vision that was left out of the web is the <a href="http://xanadu.com/xuTheModel/">inherent bidirectionality of hyperlinks</a>.  This just means that any hypertext link from A to B should be visible, and traversable, from B to A as well. A simple idea, but suprisingly difficult to implement if you start with the sort of document-centric model that the WWW uses.  
 
 <p>
@@ -51,7 +51,7 @@ Another (related) principle was that links were inherently annotations, and that
 
 <p>
 
-There have been efforts over the years to add the ability to have backlinks and annotation to the web (<a href="http://www.firstmonday.org/issues/issue4_10/margolis/">Third Voice</a>, <a href="http://zesty.ca/crit/">CritLink</a>, <a href="http://www.w3.org/2001/Annotea/">Annotea</a>). I myself briefly tried to get a web startup going sometime around 2002 that would have done something similar.  None of these has really taken off.  The latest iteration is the very interesting <a href="http://www.marginize.com/">Marginize</a>.  Other related efforts are emerging as part of <a href="http://en.wikipedia.org/wiki/Trackback">blogging software and protocols</a>, but these have some flaws:  they are limited in scope, and require the cooperation of the owner of the source document.
+There have been efforts over the years to add the ability to have backlinks and annotation to the web (<a href="http://www.firstmonday.org/issues/issue4_10/margolis/">Third Voice</a>, <a href="http://zesty.ca/crit/">CritLink</a>, <a href="http://www.w3.org/2001/Annotea/">Annotea</a>, and more recently <a href="http://www.marginize.com/">Marginize</a>). I myself briefly tried to get a web startup going sometime around 2002 that would have done something similar. Other related efforts are emerging as part of <a href="http://en.wikipedia.org/wiki/Trackback">blogging software and protocols</a>, but these have some flaws:  they are limited in scope, and require the cooperation of the owner of the source document.
 
 <p>
 LinkBack is a push in the direction of the good; much simpler, cheaper, and cruder than any of the above.  Of course, this isn't really bidirectional linking in the classic sense. Links are still one-way, all this does is make links that go either to or from a page visible, whereas before all you saw were the outgoing links.  Still, it's better than nothing, it adds an interesting new dimension to web browsing, while offering a glimpse of where we could be someday.  
@@ -68,26 +68,24 @@ The corollary of this principle is that all the people who charged off in the wo
 
 It is extremely unlikely that hypertext will ever happen in the right way, but the computational tools available to us (search engines, APIs, client-side addons like this one, microformats and emerging standards for semantics) are powerful enough to slowly and incrementally move us toward better approximations.
 
+<table style="padding-top:30px;">
+<tr>
+<td width="50%" >
+<h2>Credits</h2>
+Author: <a href="http://hyperphor.com">Mike Travers</a>, mt(at)alum.mit.edu
+<p>
+Feedback welcome.  
+<p>
+Powered by <a href="http://seomoz.org/"><img src="linkscape.png"></a>, <a href="https://github.com/mtravers/heroku-buildpack-cl">Heroku Common Lisp Buildpack</a>
+<p>
+</td>
+<td>
 <h2>Caveats</h2>
 
 Linkback depends on single point of service (currently <a href="http://seomoz.org">seomoz.org</a>) which won't scale if too many people start using this. The provider may grow unhappy and shut down services. We're also completely dependent on what they think of as a relevant Linkback.
 <p>
-But more importantly, there is a privacy risk, because it is sending your browsing history to the backend service provider.  Every page you browse goes to the LinkBack server on Heroku and then onto Seomoz.org.  
-<p>
-On the other hand, you already give up a lot of this information to search engines.  For instance, Yahoo and Google record not only your searches, but the pages you pick from search results.  So, given that your privacy is already compromised, you might as well let a little more information out.  If you are really worried about your privacy, use <a href="http://tor.eff.org/">Tor</a> for everything.
-</ul>
-<table>
-<tr>
-<td width="600px">
-<h2>Credits</h2>
-Author: <a href="http://hyperphor.com">Mike Travers</a>, mt(at)alum.mit.edu
-<p>
-Powered by <a href="http://seomoz.org/"><img src="linkscape.png"></a>.
-<p>
-Feedback welcome.  
-<p>
-</td>
-<td>
+There is also a privacy risk, because it is sending your browsing history to the backend service provider.  Every page you browse generates a request to the LinkBack server on Heroku and then to Seomoz.org.  The former does not record it, and the latter does not get enough information to identify you, but you should still be aware of this.
+
 </td>
 </tr>
 </table>

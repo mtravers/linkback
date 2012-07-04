@@ -1,10 +1,19 @@
 body {
-    font-family: 'Gill Sans'
+    font-family: 'Gill Sans';
+}
+
+a:link {
+    text-decoration: none;
+}
+
+td {
+    vertical-align:top;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .signup_button {
     border:3px solid #AAA;
-    margin: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 40px;
