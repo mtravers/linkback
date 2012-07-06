@@ -137,8 +137,11 @@
 (defparameter *page-size* 40)
 
 (defun linkback-html-service (req ent)
-  (let* ((page (trim-page-url (request-query-value "page" req)))
+  (let* (;; page is URL, not page #
+	 (page (trim-page-url (request-query-value "page" req)))
 	 (offset (ignore-errors (parse-integer (request-query-value "offset" req))))
+	 ;; zero-based page #
+	 (pagen (or (and offset (/ offset *page-size*)) 0))
 	 (results (seomoz-query page :limit *page-size* :offset offset)))
     (with-http-response (req ent)
       (with-http-body (req ent)
@@ -148,22 +151,40 @@
 	 (:body
 	  (:h2 "Links to "
 	       (link-to page page))
-
-	   (if results
-	       (progn
-		 (when offset (html 
-			       (:h3 (:princ (format nil "Page ~A" (1+ (/ offset *page-size*)))))))
-		 (html
-		  ((:ul :class "morelinks")
-		   (dolist (result results)
-		     (html
-		      (:li
-		       ((:a :href (mt:string+ "http://" (car result)))
-			(:princ (if (zerop (length (cadr result)))
-				    (car result)
-				    (de-unicode-string (cadr result))))))))))
-		 (when (= (length results) *page-size*)
-		   (link-to "More" (format nil "/linkback.html?~A"
-					   (query-to-form-urlencoded `(("page" . ,page) ("offset" . ,(+ (or offset 0) *page-size*))))))))
-	       (html "No more results"))))))))
+	  (if results
+	      (progn
+		(when offset (html 
+			     (:h3 (:princ (format nil "Page ~A" (1+ pagen))))))
+		(html
+		 ((:ul :class "morelinks")
+		  (dolist (result results)
+		    (html
+		     (:li
+		      ((:a :href (mt:string+ "http://" (car result)))
+		       (:princ (if (zerop (length (cadr result)))
+				   (car result)
+				   (de-unicode-string (cadr result))))))))))
+		(flet ((pageurl (pagen)
+			 (format nil "/linkback.html?~A"
+				 (query-to-form-urlencoded
+				  `(("page" . ,page)
+				    ("offset" . ,(* *page-size* pagen))))))) ; (+ (or offset 0) *page-size*)))))
+		  (when offset
+		    (link-to (format nil "&larr; Page ~A" (1+ (1- pagen))) 
+			     (pageurl (1- pagen))))
+		  (when (or offset  (= (length results) *page-size*))
+		    (html "&emsp;&bull;&emsp;"))
+		  (when (= (length results) *page-size*)
+		    (link-to (format nil "Page ~A &rarr;" (1+ (1+ pagen)))
+			     (pageurl (1+ pagen))))))
+	      (html "No more results"))
+	  (html
+	   ((:div :style "top-margin: 5px;")
+	    "Brought to you by " 
+	    ((:a :href "/") "LinkBack") :br
+	    "Data kindly provided by " 
+	    ((:a :href "http://seomoz.org/")
+	     "seomoz.org"
+	     ((:img :src "linkscape.png")))))
+	  ))))))
 

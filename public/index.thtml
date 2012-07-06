@@ -14,14 +14,15 @@
 <table>
 <tr>
 <td width="50%" >
-<h2>Introduction</h2>LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  For example, here's the <a href="http://en.wikipedia.org/wiki/Hypertext">Wikipedia entry for Hypertext</a> with LinkBack operating in the lower-right corner.
+LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  For example, here's the <a href="http://en.wikipedia.org/wiki/Hypertext">Wikipedia entry for Hypertext</a> with LinkBack operating in the lower-right corner.
+<p>
 <a href="hypertext.png"><img src="hypertext.png" style="width:450px;"/></a>
 <td >
 <h2>Installation</h2>
 
 
 <!-- #if expr="wu::*chrome?*" -->
-<p>To install the Chrome extension, click the nice big button:</p>
+<p>Click the nice big button:</p>
 <p style="margin-top:50px;margin-left:auto;margin-right:auto;width:200px"> <a class="signup_button" href="/linkback.crx">Install</a></p>
 <!--#else -->
 For now, LinkBack only works on Chrome.

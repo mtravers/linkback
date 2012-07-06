@@ -30,6 +30,8 @@ td {
     background: #161652;
     font: normal normal normal 10pt Calibri; 
     color: white;
+    list-style: none;
+    padding: 20 px;
 }
 .morelinks  a:link {
     color: #F1F5A0;
@@ -38,4 +40,9 @@ td {
 
 .morelinks  a:visited {
     color: #EEE474;
+}
+
+.morelinks a:hover {
+    background: #EEEEEE;
+    color: #161652;
 }
