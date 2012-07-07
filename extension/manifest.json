@@ -15,6 +15,9 @@
 	    "js": ["script.js"]
 	}
     ],
-    "web_accessible_resources": ["reset.css", "linkback.css", "up.png", "down.png"]
+    "web_accessible_resources": ["reset.css", "linkback.css", "up.png", "down.png"],
+    "background": {
+	"scripts": ["background.js"]
+	}
 
 }

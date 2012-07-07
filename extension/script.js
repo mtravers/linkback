@@ -47,28 +47,31 @@ function doQuery(pageUrl) {
     xhr.send();
 }
 
-// default to open
-function openp () {
-    var v = sessionStorage.getItem('linkback_open');
-    if (v == null) {
-	v = true;
-	sessionStorage.setItem('linkback_open', v);
-    } else {
-	v = (v == "true");	// argh
-    }
-    return v;
+function ifOpen(yes, no) {
+    chrome.extension.sendMessage({cmd:"isOpen"}, function(response) {
+	if (response) 
+	    yes.call();
+	else
+	    no.call();
+    });
+}
+
+function invertOpen() {
+    chrome.extension.sendMessage({cmd:"switchOpen"}, function(response) {
+    });
+}
+
+function setOpen(nv) {
+    chrome.extension.sendMessage({cmd:"setOpen",value: nv}, function(response) {
+    });
 }
  
 
 function showResults(results) {
     if (results != null && results.length > 0) {
 	savedResults = results;
-	if (openp()) {
-	    showResultsOpen(results);
-	}
-	else {
-	    showResultsClosed(results);
-	}
+	ifOpen(function () { showResultsOpen(results); },
+	       function () { showResultsClosed(results); });
     }
 }
 
@@ -98,16 +101,9 @@ function showResultsClosed(results) {
 }
 
 function openCloseHandler() {
-    var open = !openp();
-    sessionStorage.setItem('linkback_open', open);
-    if (open) {
-	// prob need to eliminate some stuff
-	pane.innerHTML = '';
-	showResultsOpen(savedResults);
-    } else {
-	pane.innerHTML = '';
-	showResultsClosed(savedResults);
-    }
+    var open = invertOpen();
+    pane.innerHTML = '';
+    showResults(savedResults);
 }
 
 function  makeWindow() {
@@ -212,16 +208,10 @@ function insertImg(container, imgUrl) {
     return img;
 }
 
-
-
 function opencloseUpdate() {
     openclose.innerHTML = ''
-    if (openp()) {
-	insertImg(openclose, chrome.extension.getURL("down.png"))
-    }
-    else {
-	insertImg(openclose, chrome.extension.getURL("up.png"))
-    }
+    ifOpen(function () { insertImg(openclose, chrome.extension.getURL("down.png")); },
+	   function () { insertImg(openclose, chrome.extension.getURL("up.png")); });
 }
 
 function addStyleLink(href) {
