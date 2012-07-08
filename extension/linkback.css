@@ -32,6 +32,7 @@
     border-top: 1px solid gray;
     padding-top: 3px;
     margin-bottom: 1pt;
+    min-height: 17px;
 }
 
 .linkbackmore {
@@ -50,7 +51,7 @@
     opacity:0.85; 
     border-radius: 6px;
     background: #161652;
-    min-height:16px;		/*cuts down flash */
+    min-height:17px;		/*cuts down flash */
 }
 
 .linkbackinner ul {
@@ -69,7 +70,8 @@
 
 .linkbackinner a {
     font: normal normal normal 10pt Calibri; 
-    text-decoration: none   
+    text-decoration: none;
+    background: inherit;	/* now i am a css ninja (god help me) */
 }
 
 .linkbackinner a:link {
@@ -83,5 +85,7 @@
 .linkbackinner a:hover {
     background: #EEEEEE;
     color: #161652;
+    text-decoration: none;
+   
 }
 
