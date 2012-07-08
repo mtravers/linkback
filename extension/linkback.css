@@ -50,6 +50,7 @@
     opacity:0.85; 
     border-radius: 6px;
     background: #161652;
+    min-height:16px;		/*cuts down flash */
 }
 
 .linkbackinner ul {
