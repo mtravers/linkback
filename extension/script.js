@@ -85,20 +85,10 @@ function showResultsOpen(results) {
 	insertLink(result.url, result.title);
     }
     if (results.length > 0) {
-	insertEndMatter(pageUrl, pane, results);
+	insertEndMatter(pageUrl, results);
     }
 }
 
-// need a graphic, but ok for now
-function showResultsClosed(results) {
-    makeWindow();
-    var div = document.createElement('div');
-    div.setAttribute('class','linkbackfooter');
-    pane.appendChild(div);
-    insertText(div, 'LinkBack');
-    var opener = insertOpenClose();
-    div.appendChild(opener);
-}
 
 function openCloseHandler() {
     var open = invertOpen();
@@ -150,18 +140,31 @@ function insertLinkAny(container, url, title) {
     return link;
 }
 
-function insertEndMatter(pageUrl, container, results) {
+// need a graphic, but ok for now
+// misnamed for it does not actually show results.
+function showResultsClosed(results) {
+    makeWindow();
+    insertEndMatter(null, null);
+}
+
+// if results is null, this is a closed view
+function insertEndMatter(pageUrl, results) {
+
     var div = document.createElement('div');
     div.setAttribute('class','linkbackfooter');
-    container.appendChild(div);
-    if (results.length >= 20) {	// limit imposed by server
+    pane.appendChild(div);
+
+    if (results && results.length >= 20) {	// limit imposed by server
 	var link = insertLinkAny(div, makeMoreUrl(pageUrl), "More");
 	link.setAttribute('class','linkbackmore');
     }
+
     insertLinkAny(div, homeSiteUrl, "Linkback");
     insertText(div, ' ');
-    var img = insertImgLink(div, seomozIconUrl, seomozUrl);
-    img.setAttribute('class','linkbackseo');    
+    if (results) {
+	var img = insertImgLink(div, seomozIconUrl, seomozUrl);
+	img.setAttribute('class','linkbackseo');    
+    }
     
     // additional opener -- not quite the right thing but better than nothing for now.
     var opener = insertOpenClose();
