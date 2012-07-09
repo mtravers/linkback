@@ -32,7 +32,8 @@
     border-top: 1px solid gray;
     padding-top: 3px;
     margin-bottom: 1pt;
-    min-height: 17px;
+    min-height: 24px;		/* too big but makes room for seomoz img */
+    vertical-align: middle; 	/* for inheriting */
 }
 
 .linkbackmore {
@@ -41,7 +42,7 @@
 }
 .linkbackseo {
     float: right;
-    margin-right: 18px;
+    margin-right: 22px;
 }
 
 .linkbackinner {
