@@ -1,5 +1,5 @@
 body {
-    font-family: 'Gill Sans';
+    font-family: 'Varela', sans-serif;
 }
 
 a:link {
@@ -20,8 +20,8 @@ td {
     padding-right: 40px;
     font-size: 16pt;
     text-decoration: none;
-    color: white;
-    background-color: #44d;
+    color: #F1F5A0;
+    background-color: #161652;
     border-radius: 10px;
 }
 

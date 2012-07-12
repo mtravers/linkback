@@ -3,6 +3,7 @@
 <head>
 <title>LinkBack: adding a dimension to the web</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<link href='http://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
 </head>
 
 <body style="margin-left:50px;margin-right:50px">
@@ -16,16 +17,14 @@
 <td width="50%" >
 LinkBack is a browser extension for Chrome that will automatically display incoming links for any web page you visit.  Incoming links show up in an overlay window.  For example, here's the <a href="http://en.wikipedia.org/wiki/Hypertext">Wikipedia entry for Hypertext</a> with LinkBack operating in the lower-right corner.
 <p>
-<a href="hypertext.png"><img src="hypertext.png" style="width:450px;"/></a>
+<a href="hypertext.png"><img src="hypertext.png" style="width:400px;margin-left:35px"/></a>
 <td >
-<h2>Installation</h2>
-
 
 <!-- #if expr="wu::*chrome?*" -->
-<p>Click the button:</p>
-<p style="margin-top:50px;margin-left:auto;margin-right:auto;width:200px"> <a class="signup_button" href="/linkback.crx">Install</a></p>
+<p style="margin-top:50px;margin-bottom:50px;margin-left:auto;margin-right:auto;width:300px"> 
+Click here: &emsp;  <a class="signup_button" href="/linkback.crx">Install</a></p>
 <!--#else -->
-Sorry, but for now LinkBack only works on Chrome.
+<div style="border:1px solid red;padding 30px">Sorry, but for now LinkBack only works on Chrome.</div>
 <!--#endif -->
 
 <h2>Use</h2>
@@ -43,7 +42,7 @@ LinkBack is turned off for a few websites where it is generally a nuisance, such
 </table>
 
 
-<h2>Background: The Bidirectional Web</h2>
+<h2 style="margin-top:50px;">Background: The Bidirectional Web</h2>
 
 Ted Nelson coined the term Hypertext over 40 years ago, and <a href="http://www.cs.brown.edu/memex/ACM_HypertextTestbed/papers/60.html">articulated its principles</a>, most of which have been ignored in the triumph of the Web (<a href="#worse">see below</a>).
 One of these major ignored principles is the <a href="http://xanadu.com/xuTheModel/">inherent bidirectionality of hyperlinks</a>.  This just means that any hypertext link from A to B should be visible and traversable from B to A as well. A simple idea, but suprisingly difficult to implement if you start with the sort of document-centric model used by the web.
@@ -88,11 +87,9 @@ Source and issue tracker on <a href="https://github.com/mtravers/linkback">githu
 <td>
 <h2>Caveats</h2>
 
-LinkBack depends on single point of service (currently <a href="http://seomoz.org">seomoz.org</a>) which won't scale if too many people start using this. The provider may grow unhappy and shut down services. We're also completely dependent on what they think of as a relevant LinkBack.
+The extension sends your browsing history to the backend service provider.  Every page you browse generates a request to the LinkBack server on Heroku and then to Seomoz.org.  The former does not record it, and the latter does not get enough information to identify you, but you should still be aware of this.  
 <p>
-There is also a privacy risk, because it is sending your browsing history to the backend service provider.  Every page you browse generates a request to the LinkBack server on Heroku and then to Seomoz.org.  The former does not record it, and the latter does not get enough information to identify you, but you should still be aware of this.
-<p>
-Also, do you really need to see more hyperlinks during your browsing? The web as it is isn't distrqcting enough?
+Also, do you really need to see more hyperlinks during your browsing? The web as it is isn't distracting enough?
 </td>
 </tr>
 </table>

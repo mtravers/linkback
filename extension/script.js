@@ -3,7 +3,6 @@ var server = 'http://linkback.herokuapp.com';
 var homeSiteUrl = "http://linkback.herokuapp.com";
 var seomozUrl = "http://seomoz.org";
 var seomozIconUrl = homeSiteUrl +  "/linkscape.png";
-// var homeIconUrl = "http://hyperphor.com/hyperphor-tiny.png";
 
 var openclose;
 var pageUrl;
@@ -118,7 +117,7 @@ function  makeWindow() {
 }
 
 function insertOpenClose() {
-    openclose  = document.createElement('div');
+    openclose = document.createElement('div');
     openclose.setAttribute('class', 'linkbackopener');
     opencloseUpdate();
     openclose.addEventListener('click', openCloseHandler, true);
