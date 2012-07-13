@@ -24,7 +24,7 @@ LinkBack is a browser extension for Chrome that will automatically display incom
 <p style="margin-top:50px;margin-bottom:50px;margin-left:auto;margin-right:auto;width:300px"> 
 Click here: &emsp;  <a class="signup_button" href="/linkback.crx">Install</a></p>
 <!--#else -->
-<div style="border:1px solid red;padding 30px">Sorry, but for now LinkBack only works on Chrome.</div>
+<div style="border:1px solid red;padding: 30px">Sorry, but for now LinkBack only works on Chrome.</div>
 <!--#endif -->
 
 <h2>Use</h2>
@@ -45,17 +45,17 @@ LinkBack is turned off for a few websites where it is generally a nuisance, such
 <h2 style="margin-top:50px;">Background: The Bidirectional Web</h2>
 
 Ted Nelson coined the term Hypertext over 40 years ago, and <a href="http://www.cs.brown.edu/memex/ACM_HypertextTestbed/papers/60.html">articulated its principles</a>, most of which have been ignored in the triumph of the Web (<a href="#worse">see below</a>).
-One of these major ignored principles is the <a href="http://xanadu.com/xuTheModel/">inherent bidirectionality of hyperlinks</a>.  This just means that any hypertext link from A to B should be visible and traversable from B to A as well. A simple idea, but suprisingly difficult to implement if you start with the sort of document-centric model used by the web.
+One of these ignored ideas is the <a href="http://xanadu.com/xuTheModel/">inherent bidirectionality of hyperlinks</a>.  This just means that any hypertext link from A to B should be visible and traversable from B to A as well. A simple idea, but suprisingly difficult to implement if you start with the sort of document-centric model used by the web.
 
 <p>
-Another related Nelsonian principle is that links are inherently annotations, and that the whole point of them is to allow a third party to comment on somebody else's text.  This property too is absent from the web, and difficult to graft on.
+Another related Nelsonian principle is that hyperlinks are inherently <i>annotations</i> to documents rather than (or in addition to) <i>embedded parts</i> of documents.  In this model, it is easy and natural for a third party to be able to add commentary on somebody else's text in the form of links.  This idea too is entirely absent from the web, and difficult to graft on.
 
 <p>
 
 There have been efforts over the years to add the ability to have backlinks and annotation to the web (<a href="http://www.firstmonday.org/issues/issue4_10/margolis/">Third Voice</a>, <a href="http://zesty.ca/crit/">CritLink</a>, <a href="http://www.w3.org/2001/Annotea/">Annotea</a>, and more recently <a href="http://www.marginize.com/">Marginize</a>). I myself briefly tried to get a web startup going sometime around 2002 that would have done something similar. Other related efforts are emerging as part of <a href="http://en.wikipedia.org/wiki/Trackback">blogging software and protocols</a>, but these have some flaws:  they are limited in scope, and require the cooperation of the owner of the source document.
 
 <p>
-LinkBack is an attempt to do this on the cheap.  Of course, this isn't really bidirectional linking in the classic sense. Links are still one-way, all this does is make links that go either to or from a page visible, whereas before all you saw were the outgoing links.  Still, it's better than nothing, it adds an interesting new dimension to web browsing, while offering a glimpse of where we could be someday.  
+LinkBack is an attempt to do a little of this on the cheap.  Of course, this isn't really bidirectional linking in the classic sense. Links are still one-way, all this does is make links that go either to or from a page visible, whereas before all you saw were the outgoing links.  Still, it's better than nothing; it adds an interesting new dimension to web browsing, while offering a glimpse of where we could be someday.  
 
 
 
@@ -64,21 +64,19 @@ LinkBack is an attempt to do this on the cheap.  Of course, this isn't really bi
 The lame version of hypertext we are saddled with is merely one instance of the general <a href="http://www.dreamsongs.com/WorseIsBetter.html">"worse is better" principle</a>, which essentially says that doing the wrong thing in a way that lowers adoption barriers will beat doing the right thing every time.  See the triumph of C over Lisp for another example.
 
 <p>
-The corollary of this principle is that all the people who charged off in the worse direction will eventually realize their problems and start integrating elements of the better idea into their sunk investments in doing things the wrong way.  Thus, Java started off as an attempt to graft Lisp-style memory management onto a C syntax language, and now they are beginning to discover the joys of scripting and dynamic typing.  But I digress.
-<p>
 
-It is extremely unlikely that hypertext will ever happen in the right way, but the computational tools available to us (search engines, APIs, client-side addons like this one, microformats and emerging standards for semantics) are powerful enough to slowly and incrementally move us toward better approximations.
+It is extremely unlikely that the right thing for hypertext will ever happen.  We are stuck with simple but wrong model that took over the world. <b>But</b>: the computational infrastructure available to us (search engines, APIs, client-side addons like this one, microformats and emerging standards for semantics) are powerful enough to slowly and incrementally move us toward better approximations. That is better than nothing, given that we have to live in the real world.
 
 <table style="padding-top:30px;">
 <tr>
 <td width="50%" >
 <h2>Credits</h2>
-Author: <a href="http://hyperphor.com">Mike Travers</a>
+Author: <a href="http://hyperphor.com">Mike Travers</a> 
 <p>
 Powered by:
 <ul>
 <li> <a href="http://seomoz.org/">seomoz.org<img src="linkscape.png"></a> 
-<li>Clozure Common Lisp</li>
+<li><a href="http://ccl.clozure.com/">Clozure Common Lisp</a></li>
 <li><a href="https://github.com/mtravers/heroku-buildpack-cl">Heroku Common Lisp Buildpack</a></li>
 </ul>
 Source and issue tracker on <a href="https://github.com/mtravers/linkback">github</a>.
