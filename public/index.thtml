@@ -85,7 +85,7 @@ Source and issue tracker on <a href="https://github.com/mtravers/linkback">githu
 <td>
 <h2>Caveats</h2>
 
-The extension sends your browsing history to the backend service provider.  Every page you browse generates a request to the LinkBack server on Heroku and then to Seomoz.org.  The former does not record it, and the latter does not get enough information to identify you, but you should still be aware of this.  
+The extension sends information about the pages you visit to the backend service provider.  Every page you browse generates a request to the LinkBack server on Heroku which in turn queries an API at Seomoz.org.  The former does not keep logs, and the latter does not get enough information to identify you, but you should still be aware of this.  
 <p>
 Also, do you really need to see more hyperlinks during your browsing? The web as it is isn't distracting enough?
 </td>

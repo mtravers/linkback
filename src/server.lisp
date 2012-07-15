@@ -64,12 +64,29 @@
     ("http://hyperphor.com" "Lorem ipse dixit")))
 |# 
 
+(defvar *seomoz-lock* (acl-compat.mp:make-process-lock :name 'seomoz))
+
+(defun seomoz-query-in-one-thread (page &rest args)
+  (acl-compat.mp:with-process-lock (*seomoz-lock*) ;timeout would be good, but not supported
+    (apply 'seomoz-query-with-retry page 2 args)))
+
+(defun seomoz-query-with-retry (page count &rest args)
+  (if (zerop count)
+      (apply 'seomoz-query page args)
+      (handler-case (apply 'seomoz-query page args)
+	(http-error (c)
+	  (if (eq 503 (net.aserve::response-number (slot-value c 'response)))
+	      (progn (sleep 11)		;Sleep for 11 seconds (we are only allowed 1 query every 10 secs, and apparently failed ones count!)
+		     (apply 'seomoz-query-with-retry page (1- count) args))
+	      (error c))))))
+
 (defun seomoz-query (page &rest args)
   (let* ((url (apply #'seomoz-query-url page args))
 	 (json
 	  (json:decode-json-from-string (coerce-to-string (drakma:http-request url :basic-authorization (list *access-id* *secret*))))))
     (when (assocdr :error--message json)
-      (error 'http-error :response (assocdr :status json) :message (format nil "Error from server: ~A" json)))
+      (let ((message (format nil "Error from server: ~A" json)))
+	(error 'http-error :response (net.aserve::make-resp (parse-integer (assocdr :status json)) message) :message message)))
     (mapcar #'(lambda (elt) (list (mt:assocdr :uu elt) (mt:assocdr :ut elt))) json)))
 
 ;;; Server
@@ -109,9 +126,9 @@
      ,@body))
 
 (defun linkback-service (req ent)
-  (with-json-error-handling (req ent )
+  (with-json-error-handling (req ent)
     (let* ((page (trim-page-url (request-query-value "page" req)))
-	   (results (seomoz-query page :limit 20)))
+	   (results (seomoz-query-in-one-thread page :limit 20)))
       (with-http-response-and-body (req ent)
 	(json:encode-json
 	 (mapcar #'(lambda (result)
@@ -142,7 +159,7 @@
 	 (offset (ignore-errors (parse-integer (request-query-value "offset" req))))
 	 ;; zero-based page #
 	 (pagen (or (and offset (/ offset *page-size*)) 0))
-	 (results (seomoz-query page :limit *page-size* :offset offset)))
+	 (results (seomoz-query-in-one-thread page :limit *page-size* :offset offset)))
     (with-http-response (req ent)
       (with-http-body (req ent)
 	(html
