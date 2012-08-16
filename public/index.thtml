@@ -27,6 +27,13 @@ Click here: &emsp;  <a class="signup_button" href="/linkback.crx">Install</a></p
 <div style="border:1px solid red;padding: 30px">Sorry, but for now LinkBack only works on Chrome.</div>
 <!--#endif -->
 
+<div style="border:1px solid red;padding: 30px">Argh, Chrome has changed their policies so extensions can now only be installed from their store, <i>or</i> from the Chrome extensions page.  So for now to install Linkback:
+<ol>
+<li>Click on the button above, which will download the extension file (linback.crx) and make it visible in the bottom bar
+<li>From the Chrome tools menu, go to the Tools &gt; Extensions page, and drag the file from the bottom bar into the page.
+</ol>
+</div>
+
 <h2>Use</h2>
 Just browse. The popup will appear if and when any incoming links are found.  If the popup is intrusive it can be minimized with the handle at the lower-right.  To disable it entirely use the Chrome extensions page.
 <p>
