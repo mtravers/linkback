@@ -12,7 +12,7 @@
 (defun seomoz-query-url (page &key limit offset)
   (let* ((expires (+ (unix-current-time) (* 1 60)))
 	 (signature (wu::hmac-sha1-string (format nil "~A~%~A" *access-id* expires) *secret* :bytes)))
-    (format nil "http://lsapi.seomoz.com/linkscape/links/~A?SourceCols=5&TargetCols=4&Scope=page_to_page&Sort=page_authority&Filter=External&AccessID=~A&Expires=~A&Signature=~A~A~A"
+    (format nil "http://lsapi.seomoz.com/linkscape/links/~A?SourceCols=5&TargetCols=4&Scope=page_to_page&Sort=page_authority&Filter=external&AccessID=~A&Expires=~A&Signature=~A~A~A"
 	    (uriencode-string page)
 	    *access-id*
 	    expires
