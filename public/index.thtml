@@ -20,17 +20,27 @@ LinkBack is a browser extension for Chrome that will automatically display incom
 <a href="hypertext.png"><img src="hypertext.png" style="width:400px;margin-left:35px"/></a>
 <td >
 
+<h2>Installation</h2>
 <!-- #if expr="wu::*chrome?*" -->
-<p style="margin-top:50px;margin-bottom:50px;margin-left:auto;margin-right:auto;width:300px"> 
-Click here: &emsp;  <a class="signup_button" href="/linkback.crx">Install</a></p>
+<div style="border:5px solid #423892;padding: 30px">Chrome intentionally makes it slightly difficult to install extensions. So, do this:
+<ol>
+<li><a href="/linkback.crx">Download the extension file</a> (linkback.crx) 
+<li>Open up the Chrome extentsions page (on Mac, Chrome > Preferences > Extensions)
+<li>Drag the downloaded file <b>from the finder</b> to the extensions page (dragging from the bottom bar does not work)</li>
+<li>You should get a popup dialog asking you to install the extension. If not, Chrome has altered its security policy again.</li>
+</ol>
+</div>
+
 <!--#else -->
 <div style="border:1px solid red;padding: 30px">Sorry, but for now LinkBack only works on Chrome.</div>
 <!--#endif -->
 
-<div style="border:1px solid red;padding: 30px">Argh, Chrome has changed their policies so extensions can now only be installed from their store, <i>or</i> from the Chrome extensions page.  So for now to install Linkback:
+<div style="border:5px solid red;padding: 30px">Chrome intentionally makes it slightly difficult to install extensions. So, do this:
 <ol>
-<li>Click on the button above, which will download the extension file (linback.crx) and make it visible in the bottom bar
-<li>From the Chrome tools menu, go to the Tools &gt; Extensions page, and drag the file from the bottom bar into the page.
+<li><a href="/linkback.crx">Download the extension file</a> (linkback.crx) 
+<li>Open up the <a href="chrome://extensions/">Chrome extensions page</a></li>
+<li>Drag the downloaded file <b>from the finder</b> to the extensions page (dragging from the bottom bar does not work)</li>
+<li>You should get a popup dialog asking you to install the extension. If not, Chrome has altered its security policy again.</li>
 </ol>
 </div>
 
